@@ -18,6 +18,8 @@ import CoreGraphics
 
 open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 {
+    
+    public var cornerRadius: CGFloat = 2
     /// A nested array of elements ordered logically (i.e not in visual/drawing order) for use with VoiceOver
     ///
     /// Its use is apparent when there are multiple data sets, since we want to read bars in left to right order,
@@ -351,7 +353,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 guard viewPortHandler.isInBoundsRight(barRect.origin.x) else { break }
 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(barRect)
+                let bezierPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius)
+                context.addPath(bezierPath.cgPath)
+                context.drawPath(using: .fill)
             }
         }
         
@@ -379,7 +383,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            let bezierPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius)
+            context.addPath(bezierPath.cgPath)
+            context.drawPath(using: .fill)
             
             if drawBorder
             {
