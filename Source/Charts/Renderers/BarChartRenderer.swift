@@ -750,7 +750,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                context.fill(barRect)
+                let bezierPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius)
+                context.addPath(bezierPath.cgPath)
+                context.drawPath(using: .fill)
             }
         }
     }
